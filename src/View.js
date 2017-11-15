@@ -2,7 +2,7 @@ const RATIO = 5 / 4;
 const HEIGHT = 600;
 const WIDTH = Math.floor(RATIO * HEIGHT);
 
-class View {
+export default class View {
   constructor() {
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
@@ -20,5 +20,3 @@ class View {
     this.drawBackground();
   }
 }
-
-export default View;
