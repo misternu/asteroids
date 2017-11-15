@@ -1,24 +1,18 @@
+require('./helpers');
+require('./constants');
+import Game from './Game';
 import View from './View';
+import Keyboard from './Keyboard';
 
-function mmod(m, n) {
-  return (m % n + n) % n;
-}
-
-function main() {
-  // var now = Date.now();
-  // var delta = now - then;
-  // keyboard(delta / 1000);
-  view.render();
-  // then = now;
+function main(time) {
+  var delta = time - then;
+  game.render(delta / 1000);
+  then = time;
   requestAnimationFrame(main);
 }
 
-// Cross-browser support for requestAnimationFrame
-requestAnimationFrame =
-  window.requestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.msRequestAnimationFrame ||
-  window.mozRequestAnimationFrame;
-
 const view = new View();
+const keyboard = new Keyboard();
+const game = new Game(view, keyboard);
+let then;
 main();
