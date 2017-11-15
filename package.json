@@ -1,0 +1,15 @@
+{
+  "name": "asteroids",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/misternu/asteroids.git",
+  "author": "Timothy Meixell <misternu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
+  }
+}
