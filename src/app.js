@@ -1,11 +1,24 @@
-const RATIO = 5 / 4;
-const HEIGHT = 600;
-const WIDTH = Math.floor(RATIO * HEIGHT);
+import View from './View';
 
-var canvas = document.createElement('canvas');
-var ctx = canvas.getContext('2d');
-canvas.width = WIDTH;
-canvas.height = HEIGHT;
-document.body.appendChild(canvas);
+function mmod(m, n) {
+  return (m % n + n) % n;
+}
 
-console.log('hello world');
+function main() {
+  // var now = Date.now();
+  // var delta = now - then;
+  // keyboard(delta / 1000);
+  view.render();
+  // then = now;
+  requestAnimationFrame(main);
+}
+
+// Cross-browser support for requestAnimationFrame
+requestAnimationFrame =
+  window.requestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.msRequestAnimationFrame ||
+  window.mozRequestAnimationFrame;
+
+const view = new View();
+main();
