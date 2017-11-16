@@ -1,15 +1,12 @@
+import { mmod } from './helpers';
+import Ship from './models/Ship';
+
 export default class Game {
   constructor(view, keyboard) {
     this.view = view;
     this.keyboard = keyboard;
     this.state = {
-      ship: {
-        x: WIDTH / 2,
-        y: HEIGHT / 2,
-        v: Math.PI / 2,
-        dx: 0,
-        dy: 0
-      }
+      ship: new Ship()
     };
   }
 
@@ -17,20 +14,21 @@ export default class Game {
     const inputs = this.keyboard.getInputs();
     const ship = this.state.ship;
     if (inputs.includes('A')) {
-      ship.v += delta * ROTATION;
+      ship.turnLeft(delta);
     }
     if (inputs.includes('D')) {
-      ship.v -= delta * ROTATION;
+      ship.turnRight(delta);
     }
     if (inputs.includes('W')) {
-      ship.dx += delta * Math.cos(-ship.v) * THRUST;
-      ship.dy += delta * Math.sin(-ship.v) * THRUST;
+      ship.thrust(delta);
+    } else {
+      ship.endThrust();
     }
   }
 
   handlePhysics(delta) {
-    this.state.ship.x += this.state.ship.dx;
-    this.state.ship.y += this.state.ship.dy;
+    this.state.ship.drift(delta);
+    this.state.ship.edgeLoop();
   }
 
   render(delta) {
