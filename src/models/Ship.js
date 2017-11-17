@@ -33,6 +33,7 @@ export default class Ship {
   drift(delta) {
     this.state.x += this.state.dx * delta;
     this.state.y += this.state.dy * delta;
+    this.edgeLoop();
   }
 
   edgeLoop() {

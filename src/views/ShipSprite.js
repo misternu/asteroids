@@ -1,8 +1,8 @@
 export default class ShipSprite {
   constructor(ctx) {
     this.ctx = ctx;
-    this.width = 20;
-    this.height = 30;
+    this.width = 15;
+    this.height = 25;
   }
 
   drawThrust(ctx) {

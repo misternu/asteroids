@@ -13,6 +13,20 @@ const shapes = [
     [-4, -2],
     [-2, -4],
     [0, -3]
+  ],
+  [
+    [4, 1],
+    [2, 4],
+    [0, 4],
+    [0, 1],
+    [-2, 4],
+    [-4, 1],
+    [-2, 0],
+    [-4, -1],
+    [-1, -4],
+    [2, -4],
+    [4, -1],
+    [4, 1]
   ]
 ];
 
@@ -33,8 +47,8 @@ export default class AsteroidSprite {
 
   drawShape() {
     const ctx = this.ctx;
-    const shape = shapes[0];
-    const size = 4;
+    const shape = shapes[1];
+    const size = 6;
     ctx.beginPath();
     ctx.moveTo(size * shape[0][0], size * shape[0][1]);
     for (var i = 1; i < shape.length; i++) {

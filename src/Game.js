@@ -8,14 +8,22 @@ export default class Game {
     this.keyboard = keyboard;
     this.state = {
       ship: new Ship(),
-      asteroids: [
-        new Asteroid(100, 100),
-        new Asteroid(100, 200),
-        new Asteroid(100, 300),
-        new Asteroid(100, 400),
-        new Asteroid(100, 500)
-      ]
+      asteroids: []
     };
+    this.addRocks(5);
+  }
+
+  addRocks(n) {
+    const shipx = this.state.ship.state.x;
+    const shipy = this.state.ship.state.y;
+    const asteroids = this.state.asteroids;
+    while (asteroids.length < n) {
+      let x = Math.random() * WIDTH;
+      let y = Math.random() * HEIGHT;
+      if (Math.sqrt(Math.pow(shipx - x, 2) + Math.pow(shipy - y, 2)) > 100) {
+        asteroids.push(new Asteroid(x, y));
+      }
+    }
   }
 
   handleKeyboard(delta) {
@@ -36,7 +44,9 @@ export default class Game {
 
   handlePhysics(delta) {
     this.state.ship.drift(delta);
-    this.state.ship.edgeLoop();
+    this.state.asteroids.forEach(a => {
+      a.drift(delta);
+    });
   }
 
   render(delta) {
