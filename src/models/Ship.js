@@ -6,8 +6,8 @@ export default class Ship {
       x: WIDTH / 2,
       y: HEIGHT / 2,
       v: Math.PI / 2,
-      dx: 0.1,
-      dy: 0.1,
+      dx: 0,
+      dy: 0,
       thrusting: false
     };
   }
