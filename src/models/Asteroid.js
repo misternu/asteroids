@@ -8,7 +8,8 @@ export default class Asteroid {
       v: Math.random() * Math.PI * 2,
       dx: (Math.random() - 0.5) * 100,
       dy: (Math.random() - 0.5) * 100,
-      dv: (Math.random() - 0.5) * 2
+      dv: (Math.random() - 0.5) * 2,
+      type: [0, 1][Math.floor(Math.random() * 2)]
     };
   }
 

@@ -1,34 +1,4 @@
-const shapes = [
-  [
-    [0, -3],
-    [2, -4],
-    [4, -2],
-    [2, -1],
-    [4, 1],
-    [2, 4],
-    [-1, 3],
-    [-2, 4],
-    [-4, 2],
-    [-3, 0],
-    [-4, -2],
-    [-2, -4],
-    [0, -3]
-  ],
-  [
-    [4, 1],
-    [2, 4],
-    [0, 4],
-    [0, 1],
-    [-2, 4],
-    [-4, 1],
-    [-2, 0],
-    [-4, -1],
-    [-1, -4],
-    [2, -4],
-    [4, -1],
-    [4, 1]
-  ]
-];
+import shapes from './asteroidShapes';
 
 export default class AsteroidSprite {
   constructor(ctx) {
@@ -41,13 +11,13 @@ export default class AsteroidSprite {
     ctx.save();
     ctx.translate(state.x, state.y);
     ctx.rotate(-state.v);
-    this.drawShape();
+    this.drawShape(state.type);
     ctx.restore();
   }
 
-  drawShape() {
+  drawShape(type) {
     const ctx = this.ctx;
-    const shape = shapes[1];
+    const shape = shapes[type];
     const size = 6;
     ctx.beginPath();
     ctx.moveTo(size * shape[0][0], size * shape[0][1]);
