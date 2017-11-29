@@ -42,11 +42,26 @@ export default class Game {
     }
   }
 
+  distance(a, b) {
+    return Math.sqrt(Math.abs(a.x - b.x) ** 2 + Math.abs(a.y - b.y) ** 2);
+  }
+
+  shipCollision() {
+    const ship = this.state.ship.state;
+    this.state.asteroids.forEach(a => {
+      const asteroid = a.state;
+      if (this.distance(asteroid, ship) < asteroid.radius + ship.radius) {
+        // Ship collision
+      }
+    });
+  }
+
   handlePhysics(delta) {
     this.state.ship.drift(delta);
     this.state.asteroids.forEach(a => {
       a.drift(delta);
     });
+    this.shipCollision();
   }
 
   render(delta) {

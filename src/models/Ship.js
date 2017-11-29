@@ -8,7 +8,8 @@ export default class Ship {
       v: Math.PI / 2,
       dx: 0,
       dy: 0,
-      thrusting: false
+      thrusting: false,
+      radius: 20
     };
   }
 

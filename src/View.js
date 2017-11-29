@@ -24,7 +24,9 @@ export default class View {
     this.drawBackground();
     this.ctx.strokeStyle = 'white';
     this.ctx.lineWidth = 2;
-    this.shipSprite.render(state.ship.state);
+    if (state.ship) {
+      this.shipSprite.render(state.ship.state);
+    }
     state.asteroids.forEach(this.asteroidSprite.render, this.asteroidSprite);
   }
 }
