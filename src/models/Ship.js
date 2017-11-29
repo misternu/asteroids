@@ -9,7 +9,7 @@ export default class Ship {
       dx: 0,
       dy: 0,
       thrusting: false,
-      radius: 20
+      radius: 15
     };
   }
 

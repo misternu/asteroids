@@ -10,7 +10,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ title: 'Asteroids' })
+    new HtmlWebpackPlugin({ title: 'Asteroids', template: 'src/index.html' })
   ],
   module: {
     rules: [

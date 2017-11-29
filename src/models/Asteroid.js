@@ -10,7 +10,7 @@ export default class Asteroid {
       dy: (Math.random() - 0.5) * 100,
       dv: (Math.random() - 0.5) * 2,
       type: Math.floor(Math.random() * 4),
-      radius: 24
+      radius: 20
     };
   }
 

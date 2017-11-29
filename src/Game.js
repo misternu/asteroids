@@ -8,7 +8,9 @@ export default class Game {
     this.keyboard = keyboard;
     this.state = {
       ship: new Ship(),
-      asteroids: []
+      asteroids: [],
+      started: false,
+      lives: 2
     };
     this.addRocks(5);
   }
@@ -37,6 +39,9 @@ export default class Game {
     }
     if (inputs.includes('W')) {
       ship.thrust(delta);
+      if (!this.state.started && this.state.ship) {
+        this.state.started = true;
+      }
     } else {
       ship.endThrust();
     }
@@ -52,6 +57,13 @@ export default class Game {
       const asteroid = a.state;
       if (this.distance(asteroid, ship) < asteroid.radius + ship.radius) {
         // Ship collision
+        if (this.state.lives > 0) {
+          this.state.lives -= 1;
+          this.state.started = false;
+          this.state.ship = new Ship();
+        } else {
+          this.state.ship = null;
+        }
       }
     });
   }
@@ -66,7 +78,9 @@ export default class Game {
 
   render(delta) {
     this.handleKeyboard(delta);
-    this.handlePhysics(delta);
+    if (this.state.started) {
+      this.handlePhysics(delta);
+    }
     this.view.render(this.state);
   }
 }
