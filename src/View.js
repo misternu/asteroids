@@ -1,5 +1,6 @@
 import AsteroidSprite from './views/AsteroidSprite';
 import ShipSprite from './views/ShipSprite';
+import ShotSprite from './views/ShotSprite';
 
 export default class View {
   constructor() {
@@ -11,6 +12,7 @@ export default class View {
 
     this.shipSprite = new ShipSprite(this.ctx);
     this.asteroidSprite = new AsteroidSprite(this.ctx);
+    this.shotSprite = new ShotSprite(this.ctx);
   }
 
   drawBackground() {
@@ -45,6 +47,7 @@ export default class View {
       this.drawGameOver();
     }
     state.asteroids.forEach(this.asteroidSprite.render, this.asteroidSprite);
+    state.shots.forEach(this.shotSprite.render, this.shipSprite);
     if (!state.started) {
       this.drawStart();
     }
