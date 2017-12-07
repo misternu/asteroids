@@ -1,4 +1,5 @@
 import { mmod } from '../helpers';
+import Shot from './Shot';
 
 export default class Ship {
   constructor() {
@@ -9,6 +10,7 @@ export default class Ship {
       dx: 0,
       dy: 0,
       thrusting: false,
+      cooldown: 0,
       radius: 15
     };
   }
@@ -31,10 +33,30 @@ export default class Ship {
     this.state.v -= delta * ROTATION;
   }
 
-  drift(delta) {
+  shoot() {
+    if (this.state.cooldown < 0) {
+      this.state.cooldown = SHOT_COOLDOWN;
+      return this.createShot();
+    }
+  }
+
+  createShot() {
+    const x = this.state.x + Math.cos(-this.state.v) * 10;
+    const y = this.state.y + Math.sin(-this.state.v) * 10;
+    const dx = this.state.dx + Math.cos(-this.state.v) * 200;
+    const dy = this.state.dy + Math.sin(-this.state.v) * 200;
+    return new Shot(x, y, dx, dy);
+  }
+
+  shotCooldown(delta) {
+    this.state.cooldown -= delta;
+  }
+
+  time(delta) {
     this.state.x += this.state.dx * delta;
     this.state.y += this.state.dy * delta;
     this.edgeLoop();
+    this.shotCooldown(delta);
   }
 
   edgeLoop() {

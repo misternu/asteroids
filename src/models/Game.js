@@ -1,18 +1,25 @@
-import { mmod } from './helpers';
-import Ship from './models/Ship';
-import Asteroid from './models/Asteroid';
+import { mmod } from '../helpers';
+import Ship from './Ship';
+import Asteroid from './Asteroid';
 
 export default class Game {
-  constructor(view, keyboard) {
-    this.view = view;
-    this.keyboard = keyboard;
+  constructor() {
     this.state = {
       ship: new Ship(),
       asteroids: [],
+      shots: [],
       started: false,
       lives: 2
     };
     this.addRocks(5);
+  }
+
+  ready() {
+    return !this.state.started && this.state.ship;
+  }
+
+  start() {
+    this.state.started = true;
   }
 
   addRocks(n) {
@@ -25,25 +32,6 @@ export default class Game {
       if (Math.sqrt(Math.pow(shipx - x, 2) + Math.pow(shipy - y, 2)) > 100) {
         asteroids.push(new Asteroid(x, y));
       }
-    }
-  }
-
-  handleKeyboard(delta) {
-    const inputs = this.keyboard.getInputs();
-    const ship = this.state.ship;
-    if (inputs.includes('A')) {
-      ship.turnLeft(delta);
-    }
-    if (inputs.includes('D')) {
-      ship.turnRight(delta);
-    }
-    if (inputs.includes('W')) {
-      ship.thrust(delta);
-      if (!this.state.started && this.state.ship) {
-        this.state.started = true;
-      }
-    } else {
-      ship.endThrust();
     }
   }
 
@@ -68,19 +56,43 @@ export default class Game {
     });
   }
 
+  shotCollision() {
+    const asteroids = this.state.asteroids;
+    const shots = this.state.shots;
+    asteroids.forEach((a, a_index) => {
+      shots.forEach((s, s_index) => {
+        if (this.distance(a.state, s.state) < a.state.radius) {
+          console.log(a_index);
+          asteroids.splice(a_index, 1);
+          shots.splice(s_index, 1);
+        }
+      });
+    });
+  }
+
   handlePhysics(delta) {
-    this.state.ship.drift(delta);
+    this.state.ship.time(delta);
     this.state.asteroids.forEach(a => {
       a.drift(delta);
     });
+    this.state.shots.forEach(s => {
+      s.time(delta);
+    });
+    this.state.shots = this.state.shots.filter(s => s.alive());
     this.shipCollision();
+    this.shotCollision();
   }
 
-  render(delta) {
-    this.handleKeyboard(delta);
+  shoot() {
+    const shot = this.state.ship.shoot();
+    if (shot) {
+      this.state.shots.push(shot);
+    }
+  }
+
+  time(delta) {
     if (this.state.started) {
       this.handlePhysics(delta);
     }
-    this.view.render(this.state);
   }
 }

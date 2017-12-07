@@ -9,12 +9,20 @@ export default class Keyboard {
     addEventListener(
       'keydown',
       event => {
-        keysDown[event.key] = true;
+        if (event.keyCode == 32) {
+          keysDown['Space'] = true;
+        } else {
+          keysDown[event.key] = true;
+        }
       },
       false
     );
     addEventListener('keyup', event => {
-      delete keysDown[event.key];
+      if (event.keyCode == 32) {
+        delete keysDown['Space'];
+      } else {
+        delete keysDown[event.key];
+      }
     });
   }
 
@@ -28,6 +36,9 @@ export default class Keyboard {
     }
     if (this.keysDown.ArrowRight || this.keysDown.d) {
       inputs.push('D');
+    }
+    if (this.keysDown.Space) {
+      inputs.push('Space');
     }
     return inputs;
   }
